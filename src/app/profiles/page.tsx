@@ -5,10 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-// import './services/apiService'
 
-export default function MediaCard() {
-    // const users = await userAll()
+
+export default async function MediaCard() {
   return (
     
     //je récupère tous les utilisateurs

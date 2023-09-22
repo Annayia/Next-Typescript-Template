@@ -22,7 +22,7 @@ export default function MediaCard() {
           Utilisateur
         </Typography>
         <Typography variant="body2" color="text.secondary" >
-        <p >nom + prenom</p>
+        nom + prenom
         </Typography>
         <Typography variant="body2" color="text.secondary">
         rôle
