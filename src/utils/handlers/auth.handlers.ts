@@ -2,16 +2,17 @@ import {
 	AccessTokenDto,
 	ApiService,
 	LoginDto,
-} from "../../../services/api.service";
+	RegisterDto,
+} from "../../services/api.service";
+const apiService: ApiService =
+	new ApiService(
+		"http://localhost:3003"
+	);
 
 export const handleSubmitLogin = async (
 	email: string,
 	password: string
 ) => {
-	const apiService: ApiService =
-		new ApiService(
-			"http://localhost:3003"
-		);
 	try {
 		const result: AccessTokenDto =
 			await apiService.authSignIn(
@@ -24,6 +25,9 @@ export const handleSubmitLogin = async (
 			"access_token",
 			result.accessToken
 		);
+		console.log(
+			"Connexion réussie"
+		);
 	} catch (error) {
 		console.error(
 			"Erreur lors de la connexion : ",
@@ -35,7 +39,23 @@ export const handleSubmitLogin = async (
 export const handleSubmitSignUp =
 	async (
 		email: string,
-		password: string,
-		lastname: string,
-		firstname: string
-	) => {};
+		password: string
+	) => {
+		try {
+			await apiService.authSignUp(
+				{
+					email,
+					password,
+				} as RegisterDto
+			);
+			console.log(
+				"Inscription réussie",
+				email
+			);
+		} catch (error) {
+			console.error(
+				"Erreur lors de l'inscription : ",
+				error
+			);
+		}
+	};
