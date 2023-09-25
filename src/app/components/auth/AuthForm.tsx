@@ -17,7 +17,7 @@ import {
 } from "../../../utils/handlers/auth.handlers";
 import Link from "@mui/material/Link";
 import { usePathname } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 export default function AuthForm() {
 	const currentUrl = usePathname();
 	const isLogin =
@@ -28,6 +28,7 @@ export default function AuthForm() {
 		React.useState("");
 	const [password, setPassword] =
 		React.useState("");
+	const router = useRouter();
 	return (
 		<Container maxWidth="xs">
 			<form
@@ -37,12 +38,18 @@ export default function AuthForm() {
 							email,
 							password
 						);
+						router.push(
+							"/profile"
+						);
 					} else if (
 						isSignUp
 					) {
 						handleSubmitSignUp(
 							email,
 							password
+						);
+						router.push(
+							"/login"
 						);
 					}
 					e.preventDefault();
@@ -107,7 +114,11 @@ export default function AuthForm() {
 					color="primary"
 					fullWidth
 					size="large">
-					Se connecter
+					{isLogin
+						? "Se connecter"
+						: isSignUp
+						? "S'inscrire"
+						: null}
 				</Button>
 			</form>
 			<Typography
