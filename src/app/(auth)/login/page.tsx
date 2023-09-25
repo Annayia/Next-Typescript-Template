@@ -11,7 +11,7 @@ import {
 	AccountCircle,
 	Lock,
 } from "@mui/icons-material";
-
+import { handleSubmitLogin } from "../../utils/handlers/auth.handlers";
 import Link from "@mui/material/Link";
 
 export default function login() {
@@ -19,24 +19,16 @@ export default function login() {
 		React.useState("");
 	const [password, setPassword] =
 		React.useState("");
-
-	const handleSubmit = (
-		e: React.FormEvent<HTMLFormElement>
-	) => {
-		e.preventDefault();
-		console.log(
-			"email:",
-			email,
-			"password:",
-			password
-		);
-	};
-	// TODO: externaliser la fonction de connexion et l'appeler dans ce fichier
-
 	return (
 		<Container maxWidth="xs">
 			<form
-				onSubmit={handleSubmit}>
+				onSubmit={(e) => {
+					e.preventDefault();
+					handleSubmitLogin(
+						email,
+						password
+					);
+				}}>
 				<Typography
 					variant="h4"
 					align="center"
