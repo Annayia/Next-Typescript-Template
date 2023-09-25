@@ -7,8 +7,12 @@ import {
 	Typography,
 	InputAdornment,
 } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import Link from "next/link";
+import {
+	AccountCircle,
+	Lock,
+} from "@mui/icons-material";
+
+import Link from "@mui/material/Link";
 
 export default function login() {
 	const [email, setEmail] =
@@ -27,6 +31,7 @@ export default function login() {
 			password
 		);
 	};
+	// TODO: externaliser la fonction de connexion et l'appeler dans ce fichier
 
 	return (
 		<Container maxWidth="xs">
@@ -70,6 +75,14 @@ export default function login() {
 								.value
 						)
 					}
+					InputProps={{
+						startAdornment:
+							(
+								<InputAdornment position="start">
+									<Lock />
+								</InputAdornment>
+							),
+					}}
 					fullWidth
 					required
 					margin="normal"
@@ -88,10 +101,17 @@ export default function login() {
 				align="center"
 				style={{
 					marginTop: "16px",
+					fontWeight:
+						"semi-bold",
 				}}>
-				Vous n'avez pas de
-				compte ?{" "}
-				<Link href="/sign-up">
+				<Link
+					style={{
+						color: "#3f51b5",
+					}}
+					underline="hover"
+					href="/sign-up">
+					Vous n'avez pas de
+					compte ?
 					Inscrivez-vous ici
 				</Link>
 			</Typography>

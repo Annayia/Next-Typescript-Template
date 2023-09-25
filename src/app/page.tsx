@@ -1,8 +1,16 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-<<<<<<< Updated upstream
-import { AccessTokenDto, ApiService, LoginDto, UserGetDto } from "./services/api.service";
-import { useEffect, useState } from "react";
+
+import {
+	AccessTokenDto,
+	ApiService,
+	LoginDto,
+	UserGetDto,
+} from "./services/api.service";
+import {
+	useEffect,
+	useState,
+} from "react";
 
 export default async function Home() {
 	// const apiService: ApiService = new ApiService("http://localhost:3003");
