@@ -2,7 +2,7 @@ import {
 	AccessTokenDto,
 	ApiService,
 	LoginDto,
-} from "../../services/api.service";
+} from "../../../services/api.service";
 
 export const handleSubmitLogin = async (
 	email: string,
@@ -31,3 +31,11 @@ export const handleSubmitLogin = async (
 		);
 	}
 };
+
+export const handleSubmitSignUp =
+	async (
+		email: string,
+		password: string,
+		lastname: string,
+		firstname: string
+	) => {};

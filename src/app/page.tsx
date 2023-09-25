@@ -6,7 +6,7 @@ import {
 	ApiService,
 	LoginDto,
 	UserGetDto,
-} from "./services/api.service";
+} from "../services/api.service";
 import {
 	useEffect,
 	useState,
