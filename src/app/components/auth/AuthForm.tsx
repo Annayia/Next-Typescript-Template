@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import React from "react";
 import {
 	TextField,
@@ -18,6 +18,7 @@ import {
 import Link from "@mui/material/Link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+
 export default function AuthForm() {
 	const currentUrl = usePathname();
 	const isLogin =

@@ -1,4 +1,5 @@
 import * as React from 'react';
+// import {useState} from 'react'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,12 +7,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-
 export default async function MediaCard() {
+  // const [ users, setUsers]= useState([]);
+
+
   return (
+    <div>
     
-    //je récupère tous les utilisateurs
-    //ensuite pour chaqu'un j'affiche une card
     <Card sx={{ maxWidth: 145,
        marginTop: 2,
        marginLeft:2,
@@ -30,5 +32,6 @@ export default async function MediaCard() {
         <Button size="small">Details</Button>
       </CardActions>
     </Card>
+    </div>
   );
 }
