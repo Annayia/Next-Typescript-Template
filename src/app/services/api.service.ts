@@ -8,6 +8,8 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
+const API_BASED_URL = "http://localhost:3003";
+
 import axios, {
 	AxiosError,
 	AxiosInstance,
@@ -43,7 +45,7 @@ export class ApiService {
 			baseUrl !== undefined &&
 			baseUrl !== null
 				? baseUrl
-				: "";
+				: API_BASED_URL;
 
 		const token =
 			localStorage.getItem(
