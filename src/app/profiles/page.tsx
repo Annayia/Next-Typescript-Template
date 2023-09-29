@@ -11,7 +11,6 @@ import {ApiService, UserGetDto} from '../services/api.service';
 
 export default function MediaCard() {
   const [data, setData] = useState<UserGetDto[]|null>(null)
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const apiService: ApiService = new ApiService();
   
@@ -20,10 +19,8 @@ export default function MediaCard() {
       try {
         const result = await apiService.userAll();
         setData(result);
-        setLoading(false);
       } catch (e) {
         setError(error);
-        setLoading(false);
       }
     }
     fetchData();
