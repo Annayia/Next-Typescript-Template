@@ -5,7 +5,6 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {ApiService, UserGetDto} from '../services/api.service';
 import Link from 'next/link';
@@ -32,45 +31,43 @@ export default function MediaCard() {
         setError(error);
         setLoading(true);
       }
-
     }
     fetchData();
   });
+  return(
+    userData?.map((user, index) =>{
         return(
-          userData?.map((user, index) =>{
-            return(
-
-          <Card key={index} sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
-          <CardMedia
-              sx={{ height: 440 }}
-              image="../../images/tiger-8214815_640.png"
-              title="utilisateur"
-            />
-          <CardContent sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h5" component="div">
-              Utilisateur
-            </Typography>
-            <div >
-              <Typography variant="body2" color="text.secondary">
-                Nom:  {user.firstname}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Prénom: {user.lastname}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Email: {user.email}
-              </Typography>
-            </div>
-          </CardContent>
-          <CardActions>
-            <Link href={'./profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>
-              Modifier
-            </Link>
-            <Link href={'./../profiles'} style={{textDecoration: 'none',margin: 'auto'}}>
-              Retour
-            </Link>
-          </CardActions>
-        </Card>
+            <Card key={index} sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
+              <CardMedia
+                  sx={{ height: 440 }}
+                  image="../../images/tiger-8214815_640.png"
+                  title="utilisateur"
+                />
+              <CardContent sx={{ textAlign: 'center' }}>
+                <Typography gutterBottom variant="h5" component="div">
+                  Utilisateur
+                </Typography>
+                <div >
+                  <Typography variant="body2" color="text.secondary">
+                      Nom:  {user.firstname}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                      Prénom: {user.lastname}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                      Email: {user.email}
+                  </Typography>
+                </div>
+              </CardContent>
+              <CardActions>
+                <Link href={'./profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>
+                  Modifier
+                </Link>
+                <Link href={'./../profilesList'} style={{textDecoration: 'none',margin: 'auto'}}>
+                  Retour
+                </Link>
+              </CardActions>
+          </Card>
         )
       }
     )

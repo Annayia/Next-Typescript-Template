@@ -5,9 +5,9 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {ApiService, UserGetDto} from '../services/api.service';
+import Link from 'next/link';
 
 export default function MediaCard() {
   const [data, setData] = useState<UserGetDto[]|null>(null)
@@ -51,7 +51,7 @@ export default function MediaCard() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Details</Button>
+              <Link href={'./../profile'}style={{textDecoration: 'none',margin: 'auto'}}>Details</Link>
             </CardActions>
         </Card>
       </>
