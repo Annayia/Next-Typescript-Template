@@ -8,6 +8,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {ApiService, UserGetDto} from '../services/api.service';
+import Link from 'next/link';
 
 export default function MediaCard() {
 
@@ -62,12 +63,12 @@ export default function MediaCard() {
             </div>
           </CardContent>
           <CardActions>
-            <Button size="small" sx={{ margin: 'auto' }}>
+            <Link href={'./profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>
               Modifier
-            </Button>
-            <Button size="small" sx={{ margin: 'auto' }} >
+            </Link>
+            <Link href={'./../profiles'} style={{textDecoration: 'none',margin: 'auto'}}>
               Retour
-            </Button>
+            </Link>
           </CardActions>
         </Card>
         )
