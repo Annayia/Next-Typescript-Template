@@ -36,7 +36,7 @@ export default function MediaCard() {
             borderRadius: 2}}>
             <CardMedia
               sx={{ height: 150 }}
-              image="../../images/tiger-8214815_640.png"
+              image={user.avatarUrl}
               title="utilisateur"
             />
             <CardContent>

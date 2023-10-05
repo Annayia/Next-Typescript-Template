@@ -11,15 +11,16 @@ import Link from 'next/link';
 
 export default function MediaCard() {
 
-  const [user, setUser] = useState<UserGetDto[]|null>(null)
+  
   const [userData, setUserData] = useState<UserGetDto[]>([])
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const apiService: ApiService = new ApiService();
 
+
   useEffect(() => {
     let isMounted = true;
-    const fetchData = async (id=10) => {
+    const fetchData = async (id=11) => {
       try {
         const userData = (await apiService.userById(id));
         if (isMounted) {
@@ -40,7 +41,7 @@ export default function MediaCard() {
             <Card key={index} sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
               <CardMedia
                   sx={{ height: 440 }}
-                  image="../../images/tiger-8214815_640.png"
+                  image={user.avatarUrl}
                   title="utilisateur"
                 />
               <CardContent sx={{ textAlign: 'center' }}>
@@ -48,11 +49,12 @@ export default function MediaCard() {
                   Utilisateur
                 </Typography>
                 <div >
+                  
                   <Typography variant="body2" color="text.secondary">
-                      Nom:  {user.firstname}
+                      Nom :  {user.firstname}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                      Prénom: {user.lastname}
+                      Prénom : {user.lastname}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                       Email: {user.email}
