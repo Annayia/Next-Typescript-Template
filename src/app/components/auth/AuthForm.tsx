@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import React from "react";
 import {
 	TextField,
@@ -22,7 +22,7 @@ import {
 	LoginDto,
 	RegisterDto,
 	UserGetDto,
-} from "../../../services/api.service";
+} from "../../services/api.service";
 
 export default function AuthForm() {
 	const currentUrl = usePathname();
