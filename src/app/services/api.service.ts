@@ -8,30 +8,57 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
+const API_BASED_URL = "http://localhost:3003";
 
-import * as moment from 'moment';
+import axios, {
+	AxiosError,
+	AxiosInstance,
+	AxiosRequestConfig,
+	AxiosResponse,
+	CancelToken,
+} from "axios";
+
+import * as moment from "moment";
 
 export class ApiService {
-    private instance: AxiosInstance;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+  static userAll(token: string) {
+    throw new Error('Method not implemented.');
+  }
+	private instance: AxiosInstance;
+	private baseUrl: string;
+	protected jsonParseReviver:
+		| ((
+				key: string,
+				value: any
+		  ) => any)
+		| undefined = undefined;
 
-    constructor(baseUrl?: string, instance?: AxiosInstance) {
+	constructor(
+		baseUrl?: string,
+		instance?: AxiosInstance
+	) {
+		this.instance = instance
+			? instance
+			: axios.create();
 
-        this.instance = instance ? instance : axios.create();
+		this.baseUrl =
+			baseUrl !== undefined &&
+			baseUrl !== null
+				? baseUrl
+				: API_BASED_URL;
 
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+		const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6ImZvb0BiYXIuY29tIiwiaWF0IjoxNjk2NDk4MzQ1LCJleHAiOjE2OTY1ODQ3NDV9.VnWfef7nDxsMTn8rz5GkRfw6Poa9vzMoMvxbZjH-7vU";
 
-        const token = localStorage.getItem('access_token');
-
-        if (token) {
-            this.instance.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-        } else {
-            this.instance.defaults.headers.common['Authorization'] = '';
-        }
-
-    }
+		if (token) {
+			this.instance.defaults.headers.common[
+				"Authorization"
+			] = "Bearer " + token;
+		} else {
+			this.instance.defaults.headers.common[
+				"Authorization"
+			] = "";
+		}
+	}
 
     /**
      * @return A list of all users
@@ -665,36 +692,70 @@ export interface IAccessTokenDto {
 }
 
 export class GenerateApiServiceException extends Error {
-    message: string;
-    status: number;
-    response: string;
-    headers: { [key: string]: any; };
-    result: any;
+	message: string;
+	status: number;
+	response: string;
+	headers: { [key: string]: any };
+	result: any;
 
-    constructor(message: string, status: number, response: string | unknown, headers: { [key: string]: any; }, result: any) {
-        super();
+	constructor(
+		message: string,
+		status: number,
+		response: string | unknown,
+		headers: { [key: string]: any },
+		result: any
+	) {
+		super();
 
-        this.message = message;
-        this.status = status;
-        this.response = typeof response == 'string' ? response : '';
-        this.headers = headers;
-        this.result = result;
-    }
+		this.message = message;
+		this.status = status;
+		this.response =
+			typeof response == "string"
+				? response
+				: "";
+		this.headers = headers;
+		this.result = result;
+	}
 
-    protected isGenerateApiServiceException = true;
+	protected isGenerateApiServiceException =
+		true;
 
-    static isGenerateApiServiceException(obj: any): obj is GenerateApiServiceException {
-        return obj.isGenerateApiServiceException === true;
-    }
+	static isGenerateApiServiceException(
+		obj: any
+	): obj is GenerateApiServiceException {
+		return (
+			obj.isGenerateApiServiceException ===
+			true
+		);
+	}
 }
 
-function throwException(message: string, status: number, response: string | unknown, headers: { [key: string]: any; }, result?: any): any {
-    if (result !== null && result !== undefined)
-        throw result;
-    else
-        throw new GenerateApiServiceException(message, status, response, headers, null);
+function throwException(
+	message: string,
+	status: number,
+	response: string | unknown,
+	headers: { [key: string]: any },
+	result?: any
+): any {
+	if (
+		result !== null &&
+		result !== undefined
+	)
+		throw result;
+	else
+		throw new GenerateApiServiceException(
+			message,
+			status,
+			response,
+			headers,
+			null
+		);
 }
 
-function isAxiosError(obj: any | undefined): obj is AxiosError {
-    return obj && obj.isAxiosError === true;
+function isAxiosError(
+	obj: any | undefined
+): obj is AxiosError {
+	return (
+		obj && obj.isAxiosError === true
+	);
 }
