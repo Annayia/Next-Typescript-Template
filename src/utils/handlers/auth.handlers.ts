@@ -3,8 +3,9 @@ import {
 	ApiService,
 	LoginDto,
 	RegisterDto,
+	UserGetDto,
 } from "../../services/api.service";
-import { red } from "@mui/material/colors";
+
 const apiService: ApiService =
 	new ApiService(
 		"http://localhost:3003"
@@ -22,17 +23,22 @@ export const handleSubmitLogin = async (
 					password,
 				} as LoginDto
 			);
-		localStorage.setItem(
-			"access_token",
-			result.accessToken
-		);
-		console.log(
-			"Connexion réussie"
-		);
+		if (result.accessToken) {
+			alert(
+				"Connexion réussie" +
+					email
+			);
+			localStorage.setItem(
+				"access_token",
+				result.accessToken
+			);
+			window.location.href =
+				"/login";
+		}
 	} catch (error) {
-		console.error(
-			"Erreur lors de la connexion : ",
-			error
+		alert(
+			"Erreur lors de la connexion : " +
+				error
 		);
 	}
 };
@@ -43,20 +49,24 @@ export const handleSubmitSignUp =
 		password: string
 	) => {
 		try {
-			await apiService.authSignUp(
-				{
-					email,
-					password,
-				} as RegisterDto
+			const result: UserGetDto =
+				await apiService.authSignUp(
+					{
+						email,
+						password,
+					} as RegisterDto
+				);
+			console.log(result);
+			alert(
+				"Inscription réussie " +
+					email
 			);
-			console.log(
-				"Inscription réussie",
-				email
-			);
+			window.location.href =
+				"/profile";
 		} catch (error) {
-			console.error(
-				"Erreur lors de l'inscription : ",
-				error
+			alert(
+				"Erreur lors de l'inscription : " +
+					error
 			);
 		}
 	};
