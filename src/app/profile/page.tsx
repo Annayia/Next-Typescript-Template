@@ -14,6 +14,9 @@ import {
 	UserGetDto,
 } from "../services/api.service";
 import Link from "next/link";
+import Image, {
+	ImageLoader,
+} from "next/image";
 
 export default function MediaCard() {
 	const [userData, setUserData] =
@@ -24,6 +27,11 @@ export default function MediaCard() {
 		useState(null);
 	const apiService: ApiService =
 		new ApiService();
+	const imageLoader: ImageLoader = ({
+		src,
+	}) => {
+		return `http://localhost:3003/${src}`;
+	};
 
 	useEffect(() => {
 		fetchData();
@@ -60,8 +68,17 @@ export default function MediaCard() {
 				image={
 					userData?.avatarUrl
 				}
-				title="utilisateur"
-			/>
+				title="utilisateur">
+				<Image
+					loader={imageLoader}
+					src={
+						"images/default_user.png"
+					}
+					alt="test"
+					width={100}
+					height={100}
+				/>
+			</CardMedia>
 			<CardContent
 				sx={{
 					textAlign: "center",
