@@ -1,13 +1,19 @@
 "use client";
 import React from "react";
 import AuthForm from "../../../components/auth/AuthForm";
-import TextLinkComponent from '@/app/components/text/text-link';
+import TextLinkComponent from '@/components/text/text-link';
 import { TextLinkHrefEnum } from "@/utils/enums/text-link-href";
+import { Typography } from "@mui/material";
 
 export default function login() {
   return (
     <>
-      <AuthForm />
+			<Typography variant="h4" align="center" gutterBottom>
+				Connexion
+			</Typography>
+      <AuthForm
+				formContext={TextLinkHrefEnum.login}
+			/>
       <TextLinkComponent
 				href={TextLinkHrefEnum.register}
 				text='Pas encore de compte ? Inscrivez-vous !'
