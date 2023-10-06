@@ -12,11 +12,12 @@ import Typography from "@mui/material/Typography";
 import {
 	ApiService,
 	UserGetDto,
-} from "../services/api.service";
+} from "../../services/api.service";
 import Link from "next/link";
 import Image, {
 	ImageLoader,
 } from "next/image";
+import { useGlobalContext } from "../../utils/contexts/AppContext";
 
 export default function MediaCard() {
 	const [userData, setUserData] =

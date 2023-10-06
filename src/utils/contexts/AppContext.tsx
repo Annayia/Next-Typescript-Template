@@ -1,5 +1,5 @@
 "use client";
-import { UserGetDto } from "@/app/services/api.service";
+import { UserGetDto } from "@/services/api.service";
 import {
 	createContext,
 	useContext,
@@ -10,22 +10,17 @@ import {
 
 interface ContextProps {
 	userId: number;
-	setUserId: Dispatch<
-		SetStateAction<number>
-	>;
+	setUserId: Dispatch<SetStateAction<number>>;
 	data: UserGetDto[];
-	setData: Dispatch<
-		SetStateAction<UserGetDto[]>
-	>;
+	setData: Dispatch<SetStateAction<UserGetDto[]>>;
 }
 
-const GlobalContext =
-	createContext<ContextProps>({
-		userId: 0,
-		setUserId: (): number => 0,
-		data: [],
-		setData: (): UserGetDto[] => [],
-	});
+const GlobalContext = createContext<ContextProps>({
+	userId: 0,
+	setUserId: (): number => 0,
+	data: [],
+	setData: (): UserGetDto[] => [],
+});
 
 import { ReactNode } from "react";
 
@@ -34,11 +29,8 @@ export const GlobalContextProvider = ({
 }: {
 	children: ReactNode;
 }) => {
-	const [userId, setUserId] =
-		useState(0);
-	const [data, setData] = useState<
-		UserGetDto[]
-	>([]);
+	const [userId, setUserId] = useState(0);
+	const [data, setData] = useState<UserGetDto[]>([]);
 
 	return (
 		<GlobalContext.Provider
@@ -53,5 +45,4 @@ export const GlobalContextProvider = ({
 	);
 };
 
-export const useGlobalContext = () =>
-	useContext(GlobalContext);
+export const useGlobalContext = () => useContext(GlobalContext);
