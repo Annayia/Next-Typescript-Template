@@ -2,29 +2,16 @@
 import React from 'react';
 import AuthForm from '@/app/components/auth/AuthForm';
 import { Link, Typography } from '@mui/material';
+import TextLinkComponent from '@/app/components/text/text-link';
 
 export default function Signup() {
   return (
     <>
       <AuthForm />
-      <Typography
-        variant="body2"
-        align="center"
-        style={{
-          marginTop: '16px',
-          fontWeight: 'semi-bold',
-        }}
-      >
-        <Link
-          style={{
-            color: '#3f51b5',
-          }}
-          underline="hover"
-          href="/login"
-        >
-          Déjà un compte ? Connectez-vous !
-        </Link>
-      </Typography>
+      <TextLinkComponent
+				href='/login'
+				text='Déjà un compte ? Connectez-vous !'
+			/>
     </>
   );
 }
