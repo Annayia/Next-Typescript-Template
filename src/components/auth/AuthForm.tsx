@@ -9,13 +9,13 @@ import {
 	CircularProgress,
 } from "@mui/material";
 import { AccountCircle, Lock } from "@mui/icons-material";
-import Link from "@mui/material/Link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
 	AccessTokenDto,
 	ApiService,
 	LoginDto,
 	RegisterDto,
+	ResetPwdDto,
 	StringEmailDto,
 	UserGetDto,
 } from "../../services/api.service";
@@ -27,11 +27,13 @@ interface AuthformPros {
 }
 
 export default function AuthForm(props: AuthformPros) {
-	const router = useRouter();
 	const apiService: ApiService = new ApiService("http://localhost:3003");
+	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [submitBtnText, setSubmitBtnText] = React.useState<string>("");
+	const [resetPwdToken, setResetPwdToken] = React.useState<string | null>(searchParams.get("resetToken"));
 	const [email, setEmail] = React.useState<string>("");
 	const [password, setPassword] = React.useState<string>("");
 
@@ -39,18 +41,28 @@ export default function AuthForm(props: AuthformPros) {
 		switch (props.formContext) {
 			case TextLinkHrefEnum.login:
 				setSubmitBtnText("Connexion");
+				setIsLoading(false);
 				break;
 			case TextLinkHrefEnum.register:
 				setSubmitBtnText("Inscription");
+				setIsLoading(false);
 				break;
 			case TextLinkHrefEnum.forgotPwd:
 				setSubmitBtnText("Envoyer");
+				setIsLoading(false);
+				break;
+			case TextLinkHrefEnum.resetPwd:
+				setSubmitBtnText("Enregistrer");
+				if (resetPwdToken)
+					setIsLoading(false);
+				else
+				alert("Reset token is not present");
 				break;
 			default:
 				setSubmitBtnText("Go");
+				setIsLoading(false);
 				break;
 		}
-		setIsLoading(false);
 	}, []);
 
 	const submitLogin = async () => {
@@ -85,11 +97,21 @@ export default function AuthForm(props: AuthformPros) {
 
 	const submitForgotPassword = async () => {
 		try {
-			await apiService.authForgotPwd({email} as StringEmailDto);
+			await apiService.authForgotPwd({email: email} as StringEmailDto);
 			alert("Vous allez recevoir un email contenant le lien pour modifier votre mot de passe");
 			router.push("/login");
 		} catch (error: any) {
 			alert("Erreur lors de la demande de changement de mot de passe : " + error.message);
+		}
+	};
+
+	const submitResetPassword = async () => {
+		try {
+			await apiService.authResetPwd({password: password, token: resetPwdToken} as ResetPwdDto);
+			alert("Votre mot de passe a bien été modifié");
+			router.push("/login");
+		} catch (error: any) {
+			alert("Erreur lors de la modification de votre mot de passe : " + error.message);
 		}
 	};
 
@@ -104,6 +126,9 @@ export default function AuthForm(props: AuthformPros) {
 			case TextLinkHrefEnum.forgotPwd:
 				await submitForgotPassword();
 				break;
+			case TextLinkHrefEnum.resetPwd:
+				await submitResetPassword();
+				break;
 			default:
 				break;
 		}
@@ -112,6 +137,7 @@ export default function AuthForm(props: AuthformPros) {
 	return (
 		!isLoading ?
 			<Container maxWidth="xs">
+				{props.formContext !== TextLinkHrefEnum.resetPwd ?
 					<TextField
 						label="Email"
 						type="email"
@@ -128,6 +154,8 @@ export default function AuthForm(props: AuthformPros) {
 						required
 						margin="normal"
 					/>
+					: null
+				}
 				{props.formContext !== TextLinkHrefEnum.forgotPwd ?
 					<TextField
 						label="Mot de passe"
