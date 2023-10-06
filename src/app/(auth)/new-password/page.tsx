@@ -5,19 +5,15 @@ import TextLinkComponent from '@/components/text/text-link';
 import { TextLinkHrefEnum } from '@/utils/enums/text-link-href';
 import { Typography } from '@mui/material';
 
-export default function Signup() {
+export default function newPassword() {
   return (
     <>
-			<Typography variant="h4" align="center" gutterBottom>
-				Inscription
-			</Typography>
+      <Typography variant="h4" align="center" gutterBottom>
+        Définir un nouveau mot de passe
+      </Typography>
       <AuthForm
-				formContext={TextLinkHrefEnum.register}
-			/>
-      <TextLinkComponent
-				href={TextLinkHrefEnum.login}
-				text='Déjà un compte ? Connectez-vous !'
-			/>
+				formContext={TextLinkHrefEnum.resetPwd}
+      />
     </>
   );
 }
