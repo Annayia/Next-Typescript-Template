@@ -16,9 +16,9 @@ export default function Profile() {
   const [error, setError] = useState(null);
   const apiService: ApiService = new ApiService();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+	useEffect(() => {
+		fetchData();
+	}, []);
 
   const fetchData = async (id = 11) => {
     try {
