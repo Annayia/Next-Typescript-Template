@@ -13,10 +13,14 @@ import { join } from 'path';
 import apiImageLoader from '../components/ApiImageLoader';
 
 export default function MediaCard() {
-  const [userArray, setUserArray] = useState<UserGetDto[]>([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const apiService: ApiService = new ApiService();
+	const [userArray, setUserArray] =
+		useState<UserGetDto[]>([]);
+	const [error, setError] =
+		useState(null);
+	const [loading, setLoading] =
+		useState(true);
+	const apiService: ApiService =
+		new ApiService();
 
   useEffect(() => {
     fetchData();

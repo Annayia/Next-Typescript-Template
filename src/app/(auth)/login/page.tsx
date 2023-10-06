@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import AuthForm from '@/app/components/auth/AuthForm';
+"use client";
+import React from "react";
+import AuthForm from "../../../components/auth/AuthForm";
 import { Link, Typography } from '@mui/material';
 import TextLinkComponent from '@/app/components/text/text-link';
 
