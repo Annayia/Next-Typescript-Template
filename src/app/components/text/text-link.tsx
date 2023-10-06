@@ -1,7 +1,8 @@
+import { TextLinkHrefEnum } from "@/utils/enums/text-link-href";
 import { Link, Typography } from "@mui/material";
 
 interface TextLinkComponentProps {
-  href: string;
+  href: TextLinkHrefEnum;
   text: string;
 }
 
