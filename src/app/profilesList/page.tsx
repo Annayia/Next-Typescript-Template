@@ -8,11 +8,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { ApiService, UserGetDto } from '../services/api.service';
 import Link from 'next/link';
-import Image, { ImageLoader } from 'next/image';
-import { join } from 'path';
-import apiImageLoader from '../components/ApiImageLoader';
+import Image, { ImageLoader } from 'next/image'
 
-export default function MediaCard() {
+export default function ProfilesList() {
   const [userArray, setUserArray] = useState<UserGetDto[]>([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,51 +28,55 @@ export default function MediaCard() {
       setError(error);
       setLoading(true);
     }
-  };
-
+  }
   const imageLoader: ImageLoader = ({ src }) => {
     return `http://localhost:3003/${src}`;
   };
 
-  return loading ? (
-    <></>
-  ) : (
-    userArray?.map((user: UserGetDto, index: number) => {
-      return (
-        <Card
-          key={index}
-          sx={{ maxWidth: 245, marginTop: 2, marginLeft: 2, borderRadius: 2 }}
-        >
-          <CardMedia sx={{ height: 150 }} title="utilisateur">
+  return (
+    loading ?
+      <>Loading...</>
+      : 
+      userArray?.map((user: UserGetDto, index: number)=>{
+        return(
+          <Card key={index} sx={{ maxWidth: 245,
+            marginTop: 2,
+            marginLeft:2,
+            borderRadius: 2,
+            display: 'flex',
+            flexDirection: 'column'}}
+          >
+          <CardMedia
+            sx={{ height: 150 }}
+            title="utilisateur"
+          >
             <Image
               loader={imageLoader}
-              src={user.avatarUrl ?? 'images/default_user.png'}
-              alt="test"
+              src={user.avatarUrl??"images/default_user.png"}
+              alt='user profile image'
               width={100}
               height={100}
             />
           </CardMedia>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              Utilisateur
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Utilisateur
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                    Nom: {user.lastname}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Prénom: {user.firstname}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+              Prénom: {user.email}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Nom: {user.lastname}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Prénom: {user.firstname}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Link
-              href={'./../profile'}
-              style={{ textDecoration: 'none', margin: 'auto' }}
-            >
-              Details
-            </Link>
-          </CardActions>
-        </Card>
-      );
-    })
-  );
+            </CardContent>
+            <CardActions>
+              <Link href={'./../profile'}style={{textDecoration: 'none',margin: 'auto'}}>Details</Link>
+            </CardActions>
+          </Card>
+          )
+      })
+  )
 }

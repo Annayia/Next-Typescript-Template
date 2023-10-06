@@ -10,12 +10,21 @@ import {
 import { AccountCircle, Lock } from '@mui/icons-material';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  AccessTokenDto,
-  ApiService,
-  LoginDto,
-  RegisterDto,
-  UserGetDto,
-} from '../../services/api.service';
+	AccountCircle,
+	Lock,
+} from "@mui/icons-material";
+import Link from "@mui/material/Link";
+import {
+	usePathname,
+	useRouter,
+} from "next/navigation";
+import {
+	AccessTokenDto,
+	ApiService,
+	LoginDto,
+	RegisterDto,
+	UserGetDto,
+} from "../../services/api.service";
 
 export default function AuthForm() {
   const currentUrl = usePathname();

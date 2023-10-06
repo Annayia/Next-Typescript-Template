@@ -6,10 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { ApiService, UserGetDto } from '../../services/api.service';
-import Form from './form';
+import {ApiService, UserGetDto} from '../../services/api.service';
+import Form from './form'
+import Image, { ImageLoader } from 'next/image'
 
-export default function MediaCard() {
+export default function ProfileUpdate() {
   // console.log(localStorage)
   const [userData, setUserData] = useState<UserGetDto>();
   const [error, setError] = useState(null);
@@ -31,31 +32,39 @@ export default function MediaCard() {
       setError(error);
       setLoading(true);
     }
-  };
-  // console.log()
+  }
+  const imageLoader: ImageLoader = ({ src }) => {
+    return `http://localhost:3003/${src}`
+  }
 
-  return loading ? (
-    <></>
-  ) : (
-    <Card
-      sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}
-    >
-      <CardMedia
-        sx={{ height: 440 }}
-        image={userData?.avatarUrl}
-        style={{ padding: 20 }}
-        title="utilisateur"
-      />
-      <CardContent sx={{ textAlign: 'center' }}>
-        <Typography gutterBottom variant="h3" component="div">
-          Utilisateur : {userData?.lastname}
-        </Typography>
-        <Typography component="div">
-          Veuillez renseigner les champs que vous voulez modifier
-        </Typography>
-      </CardContent>
-      <Form />
-      <CardActions></CardActions>
-    </Card>
-  );
+  return(
+    loading ?
+      <></>
+      :
+      <Card sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
+        <CardMedia
+            sx={{ height: 440 }}
+            title="utilisateur"
+          >
+          <Image
+          loader={imageLoader}
+          src={userData?.avatarUrl??"images/default_user.png"}
+          alt='user profile image'
+          width={440}
+          height={440}
+        />
+        </CardMedia>
+        <CardContent sx={{ textAlign: 'center' }}>
+          <Typography gutterBottom variant="h3" component="div">
+            Utilisateur : {userData?.lastname}
+          </Typography>
+          <Typography component="div">
+            Veuillez renseigner les champs que vous voulez modifier
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Form/>
+        </CardActions>
+      </Card>
+  )
 }

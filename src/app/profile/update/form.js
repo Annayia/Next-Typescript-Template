@@ -1,5 +1,4 @@
 "use client"
-import { exit } from 'process';
 import React from 'react'
 import { useState, useEffect } from 'react';
 
@@ -56,7 +55,6 @@ export default function Form() {
                 setFormSuccessMessage(data.submission_text)
             })
     }
-    // console.log(formData);
     return (
         <div>
             {formSuccess ?
