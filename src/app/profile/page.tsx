@@ -9,54 +9,21 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import {
-	ApiService,
-	UserGetDto,
-} from "../../services/api.service";
 import Link from "next/link";
 import Image, {
 	ImageLoader,
 } from "next/image";
-import { useGlobalContext } from "../../utils/contexts/AppContext";
+import { useGlobalContext } from "@/utils/contexts/AppContext";
 
 export default function MediaCard() {
-	const [userData, setUserData] =
-		useState<UserGetDto>();
-	const [loading, setLoading] =
-		useState(true);
-	const [error, setError] =
-		useState(null);
-	const apiService: ApiService =
-		new ApiService();
+	const { data } = useGlobalContext();
 	const imageLoader: ImageLoader = ({
 		src,
 	}) => {
 		return `http://localhost:3003/${src}`;
 	};
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	const fetchData = async (
-		id = 11
-	) => {
-		try {
-			const userData =
-				await apiService.userById(
-					id
-				);
-			setLoading(false);
-			setUserData(userData);
-		} catch (e) {
-			setError(error);
-			setLoading(true);
-		}
-	};
-
-	return loading ? (
-		<></>
-	) : (
+	return  (
 		<Card
 			sx={{
 				maxWidth: 645,
@@ -67,7 +34,7 @@ export default function MediaCard() {
 			<CardMedia
 				sx={{ height: 440 }}
 				image={
-					userData?.avatarUrl
+					data[0]?.avatarUrl
 				}
 				title="utilisateur">
 				<Image
@@ -96,7 +63,7 @@ export default function MediaCard() {
 						color="text.secondary">
 						Nom :{" "}
 						{
-							userData?.firstname
+							data[0]?.firstname
 						}
 					</Typography>
 					<Typography
@@ -104,7 +71,7 @@ export default function MediaCard() {
 						color="text.secondary">
 						Prénom :{" "}
 						{
-							userData?.lastname
+							data[0]?.lastname
 						}
 					</Typography>
 					<Typography
@@ -112,7 +79,7 @@ export default function MediaCard() {
 						color="text.secondary">
 						Email:{" "}
 						{
-							userData?.email
+							data[0]?.email
 						}
 					</Typography>
 				</div>

@@ -3,43 +3,35 @@ import { useGlobalContext } from "../utils/contexts/AppContext";
 import { useEffect } from "react";
 import { ApiService } from "../services/api.service";
 import jwt_decode, { JwtPayload } from "jwt-decode";
-import Link from "next/link";
-import { Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
-	const { data, setData } = useGlobalContext();
+	const router = useRouter();
 	const apiService: ApiService = new ApiService();
+	const { data, setData } = useGlobalContext();
 
+	
 	useEffect(() => {
-		fetchData();
+		fetchDataToSetIntoContext();
 	}, []);
 
-	const fetchData = async () => {
+	const fetchDataToSetIntoContext = async () => {
 		type customJwtPayload = JwtPayload & {
 			userId: number;
 		};
 		const token = localStorage.getItem("access_token");
-		if (!token) {
-			console.log("pas de token");
-		} else {
+		if (token) {
 			const decodedToken = jwt_decode<customJwtPayload>(token);
-			console.log(decodedToken.userId);
 			const userData = await apiService.userById(decodedToken.userId);
-			console.log(userData);
 			setData([userData]);
 		}
 	};
-	if (data !== undefined) {
-		return data.map((user) => (
-			<>
-				<Link key={user.id} href={"/profile"}>
-					<Typography>Bienvenue {user.firstName}</Typography>
-				</Link>
-			</>
-		));
-	} else {
-		<>
-			<Link href={"/login"}>Veuillez vous connecter ici</Link>;
-		</>;
+	if (data.length === 0) {
+	router.push("/login");
+		
+	}
+	else {
+		router.push("/profile");
 	}
 }
