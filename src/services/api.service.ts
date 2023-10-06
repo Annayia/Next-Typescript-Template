@@ -35,10 +35,9 @@ export class ApiService {
 		this.baseUrl =
 			baseUrl !== undefined && baseUrl !== null ? baseUrl : API_BASED_URL;
 
-		const token = {
-			accessToken:
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6ImFuZ2VsaXF1ZS5wcmlhbUBob3RtYWlsLmNvbSIsImlhdCI6MTY5NjU5NDA2MCwiZXhwIjoxNjk2NjgwNDYwfQ.GU24exQEQRXvudBh1RpqwCOR2t2mmzkj9oUigyU1_BI",
-		};
+		const token =
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6ImFuZ2VsaXF1ZS5wcmlhbUBob3RtYWlsLmNvbSIsImlhdCI6MTY5NjU5NzY5MiwiZXhwIjoxNjk2Njg0MDkyfQ.CKhsMY7TWr7xgh6iD3RcBTQOdG8gTZEhsXZaTm90cFY"	  
+		;
 
 		if (token) {
 			this.instance.defaults.headers.common["Authorization"] =
