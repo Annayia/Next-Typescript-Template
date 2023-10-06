@@ -21,42 +21,26 @@ import axios, {
 import * as moment from "moment";
 
 export class ApiService {
-  static userAll(token: string) {
-    throw new Error('Method not implemented.');
-  }
 	private instance: AxiosInstance;
 	private baseUrl: string;
-	protected jsonParseReviver:
-		| ((
-				key: string,
-				value: any
-		  ) => any)
-		| undefined = undefined;
+	protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+		undefined;
 
-	constructor(
-		baseUrl?: string,
-		instance?: AxiosInstance
-	) {
-		this.instance = instance
-			? instance
-			: axios.create();
+	constructor(baseUrl?: string, instance?: AxiosInstance) {
+		this.instance = instance ? instance : axios.create();
 
 		this.baseUrl =
-			baseUrl !== undefined &&
-			baseUrl !== null
-				? baseUrl
-				: API_BASED_URL;
+			baseUrl !== undefined && baseUrl !== null ? baseUrl : API_BASED_URL;
 
-		const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6ImZvb0BiYXIuY29tIiwiaWF0IjoxNjk2NDk4MzQ1LCJleHAiOjE2OTY1ODQ3NDV9.VnWfef7nDxsMTn8rz5GkRfw6Poa9vzMoMvxbZjH-7vU";
+		const token =
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6ImFuZ2VsaXF1ZS5wcmlhbUBob3RtYWlsLmNvbSIsImlhdCI6MTY5NjU5NzY5MiwiZXhwIjoxNjk2Njg0MDkyfQ.CKhsMY7TWr7xgh6iD3RcBTQOdG8gTZEhsXZaTm90cFY"	  
+		;
 
 		if (token) {
-			this.instance.defaults.headers.common[
-				"Authorization"
-			] = "Bearer " + token;
+			this.instance.defaults.headers.common["Authorization"] =
+				"Bearer " + token;
 		} else {
-			this.instance.defaults.headers.common[
-				"Authorization"
-			] = "";
+			this.instance.defaults.headers.common["Authorization"] = "";
 		}
 	}
 
@@ -266,6 +250,110 @@ export class ApiService {
         }
     }
 
+    /**
+     * @param file (optional)
+     * @return Upload avatar image for a user
+     */
+    userUploadAvatar(file: FileParameter | undefined, cancelToken?: CancelToken | undefined): Promise<UserGetDto> {
+        let url_ = this.baseUrl + "/user/uploadAvatar";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (file === null || file === undefined)
+            throw new Error("The parameter 'file' cannot be null.");
+        else
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processUserUploadAvatar(_response);
+        });
+    }
+
+    protected processUserUploadAvatar(response: AxiosResponse): Promise<UserGetDto> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        {
+            const _responseText = response.data;
+            let resultdefault: any = null;
+            let resultDatadefault  = _responseText;
+            resultdefault = UserGetDto.fromJS(resultDatadefault);
+            return Promise.resolve<UserGetDto>(resultdefault);
+
+        }
+    }
+
+    authTest( cancelToken?: CancelToken | undefined): Promise<any> {
+        let url_ = this.baseUrl + "/auth/test";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processAuthTest(_response);
+        });
+    }
+
+    protected processAuthTest(response: AxiosResponse): Promise<any> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+
+            return Promise.resolve<any>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<any>(null as any);
+    }
+
     authSignUp(body: RegisterDto, cancelToken?: CancelToken | undefined): Promise<UserGetDto> {
         let url_ = this.baseUrl + "/auth/signUp";
         url_ = url_.replace(/[?&]$/, "");
@@ -369,6 +457,102 @@ export class ApiService {
         }
         return Promise.resolve<AccessTokenDto>(null as any);
     }
+
+    authForgotPwd(body: StringEmailDto, cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/auth/forgotPwd";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processAuthForgotPwd(_response);
+        });
+    }
+
+    protected processAuthForgotPwd(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    authResetPwd(body: ResetPwdDto, cancelToken?: CancelToken | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/auth/resetPwd";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processAuthResetPwd(_response);
+        });
+    }
+
+    protected processAuthResetPwd(response: AxiosResponse): Promise<void> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            return Promise.resolve<void>(null as any);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<void>(null as any);
+    }
 }
 
 export class UserGetDto implements IUserGetDto {
@@ -376,6 +560,7 @@ export class UserGetDto implements IUserGetDto {
     email!: string;
     firstname?: string;
     lastname?: string;
+    avatarUrl?: string;
 
     [key: string]: any;
 
@@ -398,6 +583,7 @@ export class UserGetDto implements IUserGetDto {
             this.email = _data["email"];
             this.firstname = _data["firstname"];
             this.lastname = _data["lastname"];
+            this.avatarUrl = _data["avatarUrl"];
         }
     }
 
@@ -418,6 +604,7 @@ export class UserGetDto implements IUserGetDto {
         data["email"] = this.email;
         data["firstname"] = this.firstname;
         data["lastname"] = this.lastname;
+        data["avatarUrl"] = this.avatarUrl;
         return data;
     }
 }
@@ -427,6 +614,7 @@ export interface IUserGetDto {
     email: string;
     firstname?: string;
     lastname?: string;
+    avatarUrl?: string;
 
     [key: string]: any;
 }
@@ -691,6 +879,63 @@ export interface IAccessTokenDto {
     [key: string]: any;
 }
 
+export class ResetPwdDto implements IResetPwdDto {
+    password!: string;
+    token!: string;
+
+    [key: string]: any;
+
+    constructor(data?: IResetPwdDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            for (var property in _data) {
+                if (_data.hasOwnProperty(property))
+                    this[property] = _data[property];
+            }
+            this.password = _data["password"];
+            this.token = _data["token"];
+        }
+    }
+
+    static fromJS(data: any): ResetPwdDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResetPwdDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        for (var property in this) {
+            if (this.hasOwnProperty(property))
+                data[property] = this[property];
+        }
+        data["password"] = this.password;
+        data["token"] = this.token;
+        return data;
+    }
+}
+
+export interface IResetPwdDto {
+    password: string;
+    token: string;
+
+    [key: string]: any;
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
+}
+
 export class GenerateApiServiceException extends Error {
 	message: string;
 	status: number;
@@ -709,24 +954,17 @@ export class GenerateApiServiceException extends Error {
 
 		this.message = message;
 		this.status = status;
-		this.response =
-			typeof response == "string"
-				? response
-				: "";
+		this.response = typeof response == "string" ? response : "";
 		this.headers = headers;
 		this.result = result;
 	}
 
-	protected isGenerateApiServiceException =
-		true;
+	protected isGenerateApiServiceException = true;
 
 	static isGenerateApiServiceException(
 		obj: any
 	): obj is GenerateApiServiceException {
-		return (
-			obj.isGenerateApiServiceException ===
-			true
-		);
+		return obj.isGenerateApiServiceException === true;
 	}
 }
 
@@ -737,11 +975,7 @@ function throwException(
 	headers: { [key: string]: any },
 	result?: any
 ): any {
-	if (
-		result !== null &&
-		result !== undefined
-	)
-		throw result;
+	if (result !== null && result !== undefined) throw result;
 	else
 		throw new GenerateApiServiceException(
 			message,
@@ -752,10 +986,6 @@ function throwException(
 		);
 }
 
-function isAxiosError(
-	obj: any | undefined
-): obj is AxiosError {
-	return (
-		obj && obj.isAxiosError === true
-	);
+function isAxiosError(obj: any | undefined): obj is AxiosError {
+	return obj && obj.isAxiosError === true;
 }
