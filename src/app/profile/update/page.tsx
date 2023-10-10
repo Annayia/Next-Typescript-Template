@@ -17,7 +17,7 @@ import { useGlobalContext } from '@/utils/contexts/AppContext';
 
 export default function ProfileUpdate() {
   const [isFileUploadVisible, setIsFileUploadVisible] = useState<boolean>(false);
-  const { data } = useGlobalContext();
+  const { userDataLoggedIn } = useGlobalContext();
 
   const imageLoader: ImageLoader = ({ src }) => {
     return `http://localhost:3003/${src}`
@@ -37,7 +37,7 @@ export default function ProfileUpdate() {
             <Image
               className='imageFormCard'
               loader={imageLoader}
-              src={data[0]?.avatarUrl??"images/default_user.png"}
+              src={userDataLoggedIn[0]?.avatarUrl??"images/default_user.png"}
               alt='user profile image'
               width={440}
               height={440}
@@ -54,7 +54,7 @@ export default function ProfileUpdate() {
           <CardContent sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h3" component="div">
               Utilisateur :
-            { data[0]?.firstname + ' ' + data[0]?.lastname }
+            { userDataLoggedIn[0]?.firstname + ' ' + userDataLoggedIn[0]?.lastname }
             </Typography>
             <Typography component="div">
               Veuillez renseigner les champs que vous voulez modifier

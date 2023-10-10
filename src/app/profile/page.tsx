@@ -12,7 +12,7 @@ import { useGlobalContext } from "@/utils/contexts/AppContext";
 
 
 export default function Profile() {
-	const { data } = useGlobalContext();
+	const { userDataLoggedIn } = useGlobalContext();
   const [error, setError] = useState(null);
 
   const imageLoader: ImageLoader = ({ src }) => {
@@ -27,7 +27,7 @@ export default function Profile() {
         >
           <Image
             loader={imageLoader}
-            src={data[0]?.avatarUrl??"images/default_user.png"}
+            src={userDataLoggedIn[0]?.avatarUrl??"images/default_user.png"}
             style={{marginLeft: 220}}
             alt='user profile Image'    
             width={200}
@@ -40,13 +40,13 @@ export default function Profile() {
           </Typography>
           <div >
             <Typography variant="body2" color="text.secondary">
-                Nom :  {data[0]?.firstname}
+                Nom :  {userDataLoggedIn[0]?.firstname}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Prénom : {data[0]?.lastname}
+                Prénom : {userDataLoggedIn[0]?.lastname}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Email: {data[0]?.email}
+                Email: {userDataLoggedIn[0]?.email}
             </Typography>
           </div>
           </CardContent>

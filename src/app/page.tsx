@@ -9,14 +9,14 @@ import { useRouter } from "next/navigation";
 export default function Home() {
 	const router = useRouter();
 	const apiService: ApiService = new ApiService();
-	const { data, setData } = useGlobalContext();
+	const { userDataLoggedIn, setUserDataLoggedIn } = useGlobalContext();
 
 	
 	useEffect(() => {
-		fetchDataToSetIntoContext();
+		fetchuserDataLoggedInToSetIntoContext();
 	}, []);
 
-	const fetchDataToSetIntoContext = async () => {
+	const fetchuserDataLoggedInToSetIntoContext = async () => {
 		type customJwtPayload = JwtPayload & {
 			userId: number;
 		};
@@ -24,10 +24,10 @@ export default function Home() {
 		if (token) {
 			const decodedToken = jwt_decode<customJwtPayload>(token);
 			const userData = await apiService.userById(decodedToken.userId);
-			setData([userData]);
+			setUserDataLoggedIn([userData]);
 		}
 	};
-	if (data.length === 0) {
+	if (userDataLoggedIn.length === 0) {
 	router.push("/login");
 		
 	}
