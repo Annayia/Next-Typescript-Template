@@ -10,9 +10,10 @@ import { ApiService, UserGetDto } from '../../services/api.service';
 import Link from 'next/link';
 import Image, { ImageLoader } from 'next/image'
 
+
 export default function Profile() {
   const [userData, setUserData] = useState<UserGetDto>()
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const apiService: ApiService = new ApiService();
 
