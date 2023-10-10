@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ApiService } from "../services/api.service";
 import jwt_decode, { JwtPayload } from "jwt-decode";
 import { useRouter } from "next/navigation";
+import { Button, Container } from "@mui/material";
 
 
 export default function Home() {
@@ -27,11 +28,16 @@ export default function Home() {
 			setUserDataLoggedIn([userData]);
 		}
 	};
-	if (userDataLoggedIn.length === 0) {
-	router.push("/login");
-		
-	}
-	else {
-		router.push("/profile");
-	}
+	return (
+		// Test of the logout and of the right display of the context OK, need to use it in an app Bar then//
+		<Container>
+			<h1>Home</h1>
+			{userDataLoggedIn.length !== 0? <h2>Bonjour {userDataLoggedIn[0].firstname}</h2>: <h2>Bonjour veuillez vous connecter</h2>}
+			<Button onClick={() => router.push("/profilesList")}>Profiles List</Button>
+			<Button onClick={() => router.push("/profile")}>Profile</Button>
+			<Button onClick={() => router.push("/login")}>Login</Button>
+			<Button onClick={() => { localStorage.removeItem("access_token"); setUserDataLoggedIn([]); router.push("/") } }>Logout</Button>
+		</Container>
+	)
+	
 }

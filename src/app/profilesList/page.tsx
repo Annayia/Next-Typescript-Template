@@ -39,12 +39,14 @@ export default function ProfilesList() {
       : 
       userArray?.map((user: UserGetDto, index: number)=>{
         return(
-          <Card key={index} sx={{ maxWidth: 245,
+          <Card key={index} sx={{ 
             marginTop: 2,
             marginLeft:2,
             borderRadius: 2,
             display: 'flex',
-            flexDirection: 'column'}}
+            flexDirection: 'column',
+            alignItems: 'center',
+          justifyContent: 'center',}}
           >
           <CardMedia
             sx={{ height: 150 }}

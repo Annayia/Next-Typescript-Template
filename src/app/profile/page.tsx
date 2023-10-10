@@ -51,10 +51,10 @@ export default function Profile() {
           </div>
           </CardContent>
           <CardActions>
-            <Link href={'./profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>
+            <Link href={'/profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>
               Modifier
             </Link>
-            <Link href={'./../profilesList'} style={{textDecoration: 'none',margin: 'auto'}}>
+            <Link href={'/'} style={{textDecoration: 'none',margin: 'auto'}}>
               Retour
             </Link>
           </CardActions>
