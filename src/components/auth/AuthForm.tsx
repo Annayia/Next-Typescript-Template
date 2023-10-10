@@ -72,9 +72,10 @@ export default function AuthForm(props: AuthformPros) {
 				password,
 			} as LoginDto);
 			if (result.accessToken) {
-				alert("Connexion réussie" + email);
+				alert("Connexion réussie " + email);
 				localStorage.setItem("access_token", result.accessToken);
-				router.push("/profile");
+				router.push("/")
+				;
 			}
 		} catch (error: any) {
 			alert("Erreur lors de la connexion : " + error.message);
@@ -87,7 +88,6 @@ export default function AuthForm(props: AuthformPros) {
 				email,
 				password,
 			} as RegisterDto);
-			console.log(result);
 			alert("Inscription réussie " + email);
 			router.push("/login");
 		} catch (error: any) {
