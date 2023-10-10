@@ -6,57 +6,28 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {ApiService, UserGetDto} from '../../../services/api.service';
 import UploadFileComponent from '@/components/file/UploadFile';
 import UserUpdateForm from '@/components/profile/UserUpdateForm';
 import Image, { ImageLoader } from 'next/image'
-import './formCard.css'
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import FileUploader from './FileUploader'
-import './FileUploader.module.css';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import LoadingComponent from '@/components/loading';
 import { UploadTypesEnum } from '@/utils/enums/upload-type';
 import { ImageFileExtensionEnum } from '@/utils/enums/file-extension';
+import { useGlobalContext } from '@/utils/contexts/AppContext';
 
 export default function ProfileUpdate() {
-  const [userData, setUserData] = useState<UserGetDto>();
   const [isFileUploadVisible, setIsFileUploadVisible] = useState<boolean>(false);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data } = useGlobalContext();
 
-  const apiService: ApiService = new ApiService();
-  const id = 10;
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async (id = 10) => {
-    try {
-      const userData = await apiService.userById(id);
-      setLoading(false);
-      setUserData(userData);
-    } catch (e) {
-      setError(error);
-      setLoading(true);
-    }
-  }
   const imageLoader: ImageLoader = ({ src }) => {
     return `http://localhost:3003/${src}`
   }
-  console.log(userData);
 
   const handleCloseModal = () => {
     setIsFileUploadVisible(false);
   }
 
   return(
-    loading ?
-      <LoadingComponent />
-      :
       <>
         <Card sx={{ maxWidth: 645, marginTop: 15, margin: 'auto', borderRadius: 2 }}>
           <CardMedia
@@ -66,7 +37,7 @@ export default function ProfileUpdate() {
             <Image
               className='imageFormCard'
               loader={imageLoader}
-              src={userData?.avatarUrl??"images/default_user.png"}
+              src={data[0]?.avatarUrl??"images/default_user.png"}
               alt='user profile image'
               width={440}
               height={440}
@@ -83,7 +54,7 @@ export default function ProfileUpdate() {
           <CardContent sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h3" component="div">
               Utilisateur :
-              {userData?.lastname}
+            { data[0]?.firstname + ' ' + data[0]?.lastname }
             </Typography>
             <Typography component="div">
               Veuillez renseigner les champs que vous voulez modifier
