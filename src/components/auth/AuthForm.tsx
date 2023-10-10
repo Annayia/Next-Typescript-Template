@@ -72,7 +72,7 @@ export default function AuthForm(props: AuthformPros) {
 				password,
 			} as LoginDto);
 			if (result.accessToken) {
-				alert("Connexion réussie" + email);
+				alert("Connexion réussie " + email);
 				localStorage.setItem("access_token", result.accessToken);
 				router.push("/profile");
 			}

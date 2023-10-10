@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { ApiService, UserGetDto } from '../services/api.service';
+import { ApiService, UserGetDto } from '../../services/api.service';
 import Link from 'next/link';
 import Image, { ImageLoader } from 'next/image'
 
@@ -38,36 +38,35 @@ export default function Profile() {
       loading ?
         <></>
         :
-        <Card sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
+      <Card sx={{ maxWidth: 645, marginTop: 15, marginLeft: 50, borderRadius: 2 }}>
         <CardMedia
         sx={{ height: 200 }}
         title="utilisateur"
-      >
-        <Image
-          loader={imageLoader}
-          src={userData?.avatarUrl??"images/default_user.png"}
-          style={{marginLeft: 220}}
-          alt='user profile Image'    
-          width={200}
-          height={200}
-        />
-      </CardMedia>
-          <CardContent sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h5" component="div">
+        >
+          <Image
+            loader={imageLoader}
+            src={userData?.avatarUrl??"images/default_user.png"}
+            style={{marginLeft: 220}}
+            alt='user profile Image'    
+            width={200}
+            height={200}
+          />
+        </CardMedia>
+        <CardContent sx={{ textAlign: 'center' }}>
+          <Typography gutterBottom variant="h5" component="div">
               Utilisateur
+          </Typography>
+          <div >
+            <Typography variant="body2" color="text.secondary">
+                Nom :  {userData?.firstname}
             </Typography>
-            <div >
-
-              <Typography variant="body2" color="text.secondary">
-                  Nom :  {userData?.firstname}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                  Prénom : {userData?.lastname}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                  Email: {userData?.email}
-              </Typography>
-            </div>
+            <Typography variant="body2" color="text.secondary">
+                Prénom : {userData?.lastname}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+                Email: {userData?.email}
+            </Typography>
+          </div>
           </CardContent>
           <CardActions>
             <Link href={'./profile/update'} style={{textDecoration: 'none', margin: 'auto' }}>

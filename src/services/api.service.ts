@@ -33,7 +33,7 @@ export class ApiService {
 			baseUrl !== undefined && baseUrl !== null ? baseUrl : API_BASED_URL;
 
 		const token =
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJFbWFpbCI6ImFuZ2VsaXF1ZS5wcmlhbUBob3RtYWlsLmNvbSIsImlhdCI6MTY5NjU5NzY5MiwiZXhwIjoxNjk2Njg0MDkyfQ.CKhsMY7TWr7xgh6iD3RcBTQOdG8gTZEhsXZaTm90cFY"	  
+				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjksInVzZXJFbWFpbCI6Im9saWtvZW5AZ21haWwuY29tIiwiaWF0IjoxNjk2OTI2NjI4LCJleHAiOjE2OTcwMTMwMjh9.uyir2-5mUS5X-OZDvJtO8h2eMiqPBerg39E-MscxTds"	  
 		;
 
 		if (token) {
@@ -246,7 +246,6 @@ export class ApiService {
             let resultDatadefault  = _responseText;
             resultdefault = UserGetDto.fromJS(resultDatadefault);
             return Promise.resolve<UserGetDto>(resultdefault);
-
         }
     }
 
@@ -301,14 +300,12 @@ export class ApiService {
             let resultDatadefault  = _responseText;
             resultdefault = UserGetDto.fromJS(resultDatadefault);
             return Promise.resolve<UserGetDto>(resultdefault);
-
         }
     }
 
     authTest( cancelToken?: CancelToken | undefined): Promise<any> {
         let url_ = this.baseUrl + "/auth/test";
         url_ = url_.replace(/[?&]$/, "");
-
         let options_: AxiosRequestConfig = {
             method: "GET",
             url: url_,

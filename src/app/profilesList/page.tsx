@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { ApiService, UserGetDto } from '../services/api.service';
+import { ApiService, UserGetDto } from '../../services/api.service';
 import Link from 'next/link';
 import Image, { ImageLoader } from 'next/image'
 
