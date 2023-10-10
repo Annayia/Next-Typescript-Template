@@ -88,7 +88,6 @@ export default function AuthForm(props: AuthformPros) {
 				email,
 				password,
 			} as RegisterDto);
-			console.log(result);
 			alert("Inscription réussie " + email);
 			router.push("/login");
 		} catch (error: any) {
