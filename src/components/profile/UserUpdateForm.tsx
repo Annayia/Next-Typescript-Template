@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {ApiService, UserGetDto, UserUpdateDto} from '../../../services/api.service';
+import {ApiService, UserGetDto, UserUpdateDto} from '../../services/api.service';
 
 import {
 	TextField,
@@ -11,11 +11,11 @@ import {
 let id = 10;
 let email = 'olikoen@yahoo.fr';
 
- export default function UserUpdateForm() {
+export default function UserUpdateForm() {
     const apiService: ApiService = new ApiService();
     const [lastname, setLastname] = useState<string>("");
     const [firstname, setFirstname] = useState<string>("");
-   
+
     async function handleSubmitForm() {
         //send Data over server
         const updatedUser: UserUpdateDto = new UserUpdateDto({
