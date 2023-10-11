@@ -3,4 +3,7 @@ export enum TextLinkHrefEnum {
   register = '/sign-up',
   forgotPwd = '/forgot-password',
   resetPwd = '/new-password',
+  profileList = '/profilesList',
+  profile = '/profile',
+  home = '/',
 }

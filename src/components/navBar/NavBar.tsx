@@ -1,9 +1,11 @@
 'use client';
 import React from 'react';
 import { useUserContext } from '@/utils/contexts/UserContext';
-import { useRouter } from 'next/navigation';
-import { AppBar, Button, Container, IconButton } from '@mui/material';
+import { AppBar, Button, Container, IconButton, Stack } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { TextLinkHrefEnum } from '@/utils/enums/text-link-href';
+import { useRouter } from 'next/navigation';
 const NavBar = () => {
   const { userDataLoggedIn, setUserDataLoggedIn } = useUserContext();
   const router = useRouter();
@@ -11,27 +13,39 @@ const NavBar = () => {
   return userDataLoggedIn ? (
     <>
       <AppBar>
-        <Container>
-          <IconButton onClick={() => router.push('/')}>
+        <Stack justifyContent={'space-between'} direction={'row'}>
+          <IconButton onClick={() => router.push(TextLinkHrefEnum.home)}>
             <HomeIcon />
           </IconButton>
-          <Button color="inherit" onClick={() => router.push('/profilesList')}>
-            Profiles List
-          </Button>
-          <Button color="inherit" onClick={() => router.push('/profile')}>
-            Profile
-          </Button>{' '}
           <Button
             color="inherit"
             onClick={() => {
-              localStorage.removeItem('access_token');
-              setUserDataLoggedIn(undefined);
-              router.push('/');
+              router.push(TextLinkHrefEnum.profileList);
             }}
           >
-            Logout
+            Liste des profils
           </Button>
-        </Container>
+          <Stack direction={'row'}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                localStorage.removeItem('access_token');
+                setUserDataLoggedIn(undefined);
+                router.push(TextLinkHrefEnum.home);
+              }}
+            >
+              Logout
+            </Button>
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                router.push(TextLinkHrefEnum.profile);
+              }}
+            >
+              <AccountCircleIcon />
+            </IconButton>
+          </Stack>
+        </Stack>
       </AppBar>
     </>
   ) : (
