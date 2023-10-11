@@ -2,12 +2,14 @@
 
 import React, { useState } from "react";
 import {ApiService, UserGetDto, UserUpdateDto} from '../../services/api.service';
-import Router, { useRouter } from "next/navigation";
+import { useGlobalContext } from '@/utils/contexts/AppContext';
+import { useRouter } from "next/navigation";
 
 import {
 	TextField,
 	Button,
 	Container,
+	Link,
 } from "@mui/material";
 import ToolBoxService from "@/services/toolbox.service";
 import { useUserContext } from "@/utils/contexts/UserContext";
@@ -59,6 +61,14 @@ export default function UserUpdateForm() {
 					size="large"
 					onClick={handleSubmitForm}>
                     Validez
+				</Button>
+				<Button
+					variant="contained"
+					color="primary"
+					fullWidth
+					size="large"
+					onClick={()=>{router.back()}}>
+				Annuler
 				</Button>
 			</Container>
 	);
