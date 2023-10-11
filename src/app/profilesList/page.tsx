@@ -6,21 +6,15 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { ApiService, UserGetDto } from '../services/api.service';
+import { ApiService, UserGetDto } from '../../services/api.service';
 import Link from 'next/link';
 import Image, { ImageLoader } from 'next/image';
-import { join } from 'path';
-import apiImageLoader from '../components/ApiImageLoader';
 
-export default function MediaCard() {
-	const [userArray, setUserArray] =
-		useState<UserGetDto[]>([]);
-	const [error, setError] =
-		useState(null);
-	const [loading, setLoading] =
-		useState(true);
-	const apiService: ApiService =
-		new ApiService();
+export default function ProfilesList() {
+  const [userArray, setUserArray] = useState<UserGetDto[]>([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const apiService: ApiService = new ApiService();
 
   useEffect(() => {
     fetchData();
@@ -35,25 +29,32 @@ export default function MediaCard() {
       setLoading(true);
     }
   };
-
   const imageLoader: ImageLoader = ({ src }) => {
     return `http://localhost:3003/${src}`;
   };
 
   return loading ? (
-    <></>
+    <>Loading...</>
   ) : (
     userArray?.map((user: UserGetDto, index: number) => {
       return (
         <Card
           key={index}
-          sx={{ maxWidth: 245, marginTop: 2, marginLeft: 2, borderRadius: 2 }}
+          sx={{
+            marginTop: 2,
+            marginLeft: 2,
+            borderRadius: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           <CardMedia sx={{ height: 150 }} title="utilisateur">
             <Image
               loader={imageLoader}
               src={user.avatarUrl ?? 'images/default_user.png'}
-              alt="test"
+              alt="user profile image"
               width={100}
               height={100}
             />
@@ -67,6 +68,9 @@ export default function MediaCard() {
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Prénom: {user.firstname}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Prénom: {user.email}
             </Typography>
           </CardContent>
           <CardActions>
