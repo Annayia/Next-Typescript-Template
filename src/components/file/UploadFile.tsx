@@ -1,12 +1,12 @@
 'use client'
 
-import { useGlobalContext } from '@/utils/contexts/AppContext';
 import { useState } from 'react'
 import {ApiService,FileParameter,UserGetDto} from '../../services/api.service'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import { UploadTypesEnum } from '@/utils/enums/upload-type';
 import ToolBoxService from '@/services/toolbox.service';
 import { ImageFileExtensionEnum } from '@/utils/enums/file-extension';
+import { useUserContext } from '@/utils/contexts/UserContext';
 
 const formatFileAcceptedType = (acceptedTypes: string[]): string => {
   let fileTypes: string[] = [];
@@ -31,7 +31,7 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
 
   const apiService: ApiService = new ApiService();
   const [selectedFile, setSelectedFile] = useState<File>()
-  const { userDataLoggedIn, setUserDataLoggedIn } = useGlobalContext();
+  const { userDataLoggedIn, setUserDataLoggedIn } = useUserContext();
 
   const onSubmit = async () => {
     if (!selectedFile) return;
@@ -50,7 +50,7 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
           console.log(fileParams);
           const updatedUser: UserGetDto = await apiService.userUploadAvatar(fileParams);
           console.log(updatedUser);
-          setUserDataLoggedIn([updatedUser])
+          setUserDataLoggedIn(updatedUser)
           break;
 
         default:
