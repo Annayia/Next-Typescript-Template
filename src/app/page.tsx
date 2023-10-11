@@ -29,9 +29,7 @@ export default function Home() {
   // Test of the logout and of the right display of the context OK, need to use it in an app Bar then//
   return userDataLoggedIn ? (
     <Container>
-      <h1>
-        Bonjour {userDataLoggedIn.firstname ?? userDataLoggedIn.email}
-      </h1>
+      <h1>Bonjour {userDataLoggedIn.firstname ?? userDataLoggedIn.email}</h1>
       <Button onClick={() => router.push('/profilesList')}>
         Profiles List
       </Button>

@@ -1,37 +1,37 @@
-"use client";
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+'use client';
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
 
-import { UserGetDto } from "@/services/api.service";
+import { UserGetDto } from '@/services/api.service';
 
 interface UserContextProps {
-	userDataLoggedIn: UserGetDto | undefined;
-	setUserDataLoggedIn: Dispatch<SetStateAction<UserGetDto | undefined>>;
+  userDataLoggedIn: UserGetDto | undefined;
+  setUserDataLoggedIn: Dispatch<SetStateAction<UserGetDto | undefined>>;
 }
 
 const UserContext = createContext<UserContextProps>({
   userDataLoggedIn: undefined,
-  setUserDataLoggedIn: (): UserGetDto | undefined => undefined
+  setUserDataLoggedIn: (): UserGetDto | undefined => undefined,
 });
 
-export const UserContextProvider = ({
-	children,
-}: {
-	children: ReactNode;
-}) => {
-  const [userDataLoggedIn, setUserDataLoggedIn] = useState<UserGetDto | undefined>();
+export const UserContextProvider = ({ children }: { children: ReactNode }) => {
+  const [userDataLoggedIn, setUserDataLoggedIn] = useState<
+    UserGetDto | undefined
+  >();
 
-	const state = {
-		userDataLoggedIn,
-		setUserDataLoggedIn
-	}
+  const state = {
+    userDataLoggedIn,
+    setUserDataLoggedIn,
+  };
 
-	return (
-		<UserContext.Provider
-			value={state}>
-			{children}
-		</UserContext.Provider>
-	);
-}
+  return <UserContext.Provider value={state}>{children}</UserContext.Provider>;
+};
 
 export const useUserContext = () => {
   const state = useContext(UserContext);
@@ -41,4 +41,4 @@ export const useUserContext = () => {
   }
 
   return state;
-}
+};

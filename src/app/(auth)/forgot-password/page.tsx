@@ -11,13 +11,11 @@ export default function forgotPassword() {
       <Typography variant="h4" align="center" gutterBottom>
         Mot de passe oublié
       </Typography>
-      <AuthForm
-				formContext={TextLinkHrefEnum.forgotPwd}
-      />
+      <AuthForm formContext={TextLinkHrefEnum.forgotPwd} />
       <TextLinkComponent
-				href={TextLinkHrefEnum.login}
-				text='Retour à la page de connexion'
-			/>
+        href={TextLinkHrefEnum.login}
+        text="Retour à la page de connexion"
+      />
     </>
   );
 }

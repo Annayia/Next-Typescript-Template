@@ -8,16 +8,14 @@ import { Typography } from '@mui/material';
 export default function Signup() {
   return (
     <>
-			<Typography variant="h4" align="center" gutterBottom>
-				Inscription
-			</Typography>
-      <AuthForm
-				formContext={TextLinkHrefEnum.register}
-			/>
+      <Typography variant="h4" align="center" gutterBottom>
+        Inscription
+      </Typography>
+      <AuthForm formContext={TextLinkHrefEnum.register} />
       <TextLinkComponent
-				href={TextLinkHrefEnum.login}
-				text='Déjà un compte ? Connectez-vous !'
-			/>
+        href={TextLinkHrefEnum.login}
+        text="Déjà un compte ? Connectez-vous !"
+      />
     </>
   );
 }

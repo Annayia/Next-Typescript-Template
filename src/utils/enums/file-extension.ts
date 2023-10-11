@@ -1,4 +1,4 @@
 export enum ImageFileExtensionEnum {
-  jpg = "image/jpeg",
-  png = "image/png"
+  jpg = 'image/jpeg',
+  png = 'image/png',
 }

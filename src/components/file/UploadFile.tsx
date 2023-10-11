@@ -1,8 +1,20 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import {ApiService,FileParameter,UserGetDto} from '../../services/api.service'
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { useState } from 'react';
+import {
+  ApiService,
+  FileParameter,
+  UserGetDto,
+} from '../../services/api.service';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 import { UploadTypesEnum } from '@/utils/enums/upload-type';
 import ToolBoxService from '@/services/toolbox.service';
 import { ImageFileExtensionEnum } from '@/utils/enums/file-extension';
@@ -12,12 +24,15 @@ const formatFileAcceptedType = (acceptedTypes: string[]): string => {
   let fileTypes: string[] = [];
 
   acceptedTypes.forEach((fileType: any) => {
-    let mediaFileTypeEqImg = Object.keys(ImageFileExtensionEnum)[Object.values(ImageFileExtensionEnum).indexOf(fileType)];
-    if (!ToolBoxService.stringIsNullOrWhiteSpace(mediaFileTypeEqImg)) fileTypes.push(mediaFileTypeEqImg);
+    let mediaFileTypeEqImg = Object.keys(ImageFileExtensionEnum)[
+      Object.values(ImageFileExtensionEnum).indexOf(fileType)
+    ];
+    if (!ToolBoxService.stringIsNullOrWhiteSpace(mediaFileTypeEqImg))
+      fileTypes.push(mediaFileTypeEqImg);
   });
 
-  return fileTypes.join(", ");
-}
+  return fileTypes.join(', ');
+};
 
 interface UploadFileComponentProps {
   title: string;
@@ -28,9 +43,8 @@ interface UploadFileComponentProps {
 }
 
 export default function UploadFileComponent(props: UploadFileComponentProps) {
-
   const apiService: ApiService = new ApiService();
-  const [selectedFile, setSelectedFile] = useState<File>()
+  const [selectedFile, setSelectedFile] = useState<File>();
   const { userDataLoggedIn, setUserDataLoggedIn } = useUserContext();
 
   const onSubmit = async () => {
@@ -42,15 +56,14 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
     try {
       const fileParams: FileParameter = {
         data: selectedFile,
-        fileName: selectedFile.name
-      }
+        fileName: selectedFile.name,
+      };
 
       switch (props.uploadType) {
         case UploadTypesEnum.userAvatar:
-          console.log(fileParams);
-          const updatedUser: UserGetDto = await apiService.userUploadAvatar(fileParams);
-          console.log(updatedUser);
-          setUserDataLoggedIn(updatedUser)
+          const updatedUser: UserGetDto =
+            await apiService.userUploadAvatar(fileParams);
+          setUserDataLoggedIn(updatedUser);
           break;
 
         default:
@@ -59,28 +72,26 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
 
       props.handleOnClose();
     } catch (e: any) {
-      console.error(e)
+      console.error(e);
     }
-  }
+  };
 
   return (
     <Dialog open={true} onClose={props.handleOnClose}>
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent>
-        {props.contentText ?
-          <DialogContentText>
-            {props.contentText}
-          </DialogContentText>
-          : <></>
-        }
+        {props.contentText ? (
+          <DialogContentText>{props.contentText}</DialogContentText>
+        ) : (
+          <></>
+        )}
         <TextField
           type="file"
           inputProps={{
             accept: props.acceptedFileExtension.join(','),
           }}
           onChange={(e: any) => {
-            if (e.target.files.length > 0)
-              setSelectedFile(e.target.files[0]);
+            if (e.target.files.length > 0) setSelectedFile(e.target.files[0]);
           }}
           fullWidth
           required
@@ -92,5 +103,5 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
         <Button onClick={onSubmit}>Enregistrer</Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 }

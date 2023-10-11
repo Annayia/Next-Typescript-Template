@@ -11,9 +11,7 @@ export default function newPassword() {
       <Typography variant="h4" align="center" gutterBottom>
         Définir un nouveau mot de passe
       </Typography>
-      <AuthForm
-				formContext={TextLinkHrefEnum.resetPwd}
-      />
+      <AuthForm formContext={TextLinkHrefEnum.resetPwd} />
     </>
   );
 }
