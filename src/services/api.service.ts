@@ -32,9 +32,7 @@ export class ApiService {
 		this.baseUrl =
 			baseUrl !== undefined && baseUrl !== null ? baseUrl : API_BASED_URL;
 
-		const token =
-				"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInVzZXJFbWFpbCI6ImZvb0BiYXIuY29tIiwiaWF0IjoxNjk2OTM0NDU0LCJleHAiOjE2OTcwMjA4NTR9.bgOqGUqKWZxJUkySPPSnidRikDwRZgCYahOGdpKBgIg"
-		;
+		const token = localStorage?.getItem("access_token") ?? "";
 
 		if (token) {
 			this.instance.defaults.headers.common["Authorization"] =
