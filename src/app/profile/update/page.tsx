@@ -13,11 +13,11 @@ import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { UploadTypesEnum } from '@/utils/enums/upload-type';
 import { ImageFileExtensionEnum } from '@/utils/enums/file-extension';
-import { useGlobalContext } from '@/utils/contexts/AppContext';
+import { useUserContext } from '@/utils/contexts/UserContext';
 
 export default function ProfileUpdate() {
   const [isFileUploadVisible, setIsFileUploadVisible] = useState<boolean>(false);
-  const { userDataLoggedIn } = useGlobalContext();
+  const { userDataLoggedIn } = useUserContext();
 
   const imageLoader: ImageLoader = ({ src }) => {
     return `http://localhost:3003/${src}`
@@ -37,7 +37,7 @@ export default function ProfileUpdate() {
             <Image
               className='imageFormCard'
               loader={imageLoader}
-              src={userDataLoggedIn[0]?.avatarUrl??"images/default_user.png"}
+              src={userDataLoggedIn?.avatarUrl??"images/default_user.png"}
               alt='user profile image'
               width={440}
               height={440}
@@ -54,7 +54,7 @@ export default function ProfileUpdate() {
           <CardContent sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h3" component="div">
               Utilisateur :
-            { userDataLoggedIn[0]?.firstname + ' ' + userDataLoggedIn[0]?.lastname }
+            { userDataLoggedIn?.firstname + ' ' + userDataLoggedIn?.lastname }
             </Typography>
             <Typography component="div">
               Veuillez renseigner les champs que vous voulez modifier

@@ -8,11 +8,11 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import Image, { ImageLoader } from 'next/image';
-import { useGlobalContext } from "@/utils/contexts/AppContext";
+import { useUserContext } from '@/utils/contexts/UserContext';
 
 
 export default function Profile() {
-	const { userDataLoggedIn } = useGlobalContext();
+	const { userDataLoggedIn } = useUserContext();
   const [error, setError] = useState(null);
 
   const imageLoader: ImageLoader = ({ src }) => {
@@ -27,9 +27,9 @@ export default function Profile() {
         >
           <Image
             loader={imageLoader}
-            src={userDataLoggedIn[0]?.avatarUrl??"images/default_user.png"}
+            src={userDataLoggedIn?.avatarUrl??"images/default_user.png"}
             style={{marginLeft: 220}}
-            alt='user profile Image'    
+            alt='user profile Image'
             width={200}
             height={200}
           />
@@ -40,13 +40,13 @@ export default function Profile() {
           </Typography>
           <div >
             <Typography variant="body2" color="text.secondary">
-                Nom :  {userDataLoggedIn[0]?.firstname}
+                Nom :  {userDataLoggedIn?.firstname}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Prénom : {userDataLoggedIn[0]?.lastname}
+                Prénom : {userDataLoggedIn?.lastname}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-                Email: {userDataLoggedIn[0]?.email}
+                Email: {userDataLoggedIn?.email}
             </Typography>
           </div>
           </CardContent>

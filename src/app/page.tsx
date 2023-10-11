@@ -1,15 +1,15 @@
 'use client';
-import { useGlobalContext } from '../utils/contexts/AppContext';
 import { useEffect } from 'react';
 import { ApiService } from '../services/api.service';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
 import { Button, Container } from '@mui/material';
+import { useUserContext } from '@/utils/contexts/UserContext';
 
 export default function Home() {
   const router = useRouter();
   const apiService: ApiService = new ApiService();
-  const { userDataLoggedIn, setUserDataLoggedIn } = useGlobalContext();
+  const { userDataLoggedIn, setUserDataLoggedIn } = useUserContext();
 
   useEffect(() => {
     fetchuserDataLoggedInToSetIntoContext();
@@ -23,14 +23,14 @@ export default function Home() {
     if (token) {
       const decodedToken = jwt_decode<customJwtPayload>(token);
       const userData = await apiService.userById(decodedToken.userId);
-      setUserDataLoggedIn([userData]);
+      setUserDataLoggedIn(userData);
     }
   };
   // Test of the logout and of the right display of the context OK, need to use it in an app Bar then//
-  return userDataLoggedIn.length !== 0 ? (
+  return userDataLoggedIn ? (
     <Container>
       <h1>
-        Bonjour {userDataLoggedIn[0].firstname ?? userDataLoggedIn[0].email}
+        Bonjour {userDataLoggedIn.firstname ?? userDataLoggedIn.email}
       </h1>
       <Button onClick={() => router.push('/profilesList')}>
         Profiles List
@@ -39,7 +39,7 @@ export default function Home() {
       <Button
         onClick={() => {
           localStorage.removeItem('access_token');
-          setUserDataLoggedIn([]);
+          setUserDataLoggedIn(undefined);
           router.push('/');
         }}
       >
