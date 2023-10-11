@@ -1,30 +1,34 @@
+'use client'
+
 import React, { useState } from "react";
 import {ApiService, UserGetDto, UserUpdateDto} from '../../services/api.service';
+import { useGlobalContext } from '@/utils/contexts/AppContext';
+import Router, { useRouter } from "next/navigation";
 
 import {
 	TextField,
 	Button,
 	Container,
 } from "@mui/material";
-
-
-let id = 10;
-let email = 'olikoen@yahoo.fr';
+import ToolBoxService from "@/services/toolbox.service";
 
 export default function UserUpdateForm() {
     const apiService: ApiService = new ApiService();
+	const router = useRouter();
     const [lastname, setLastname] = useState<string>("");
     const [firstname, setFirstname] = useState<string>("");
+	const { userDataLoggedIn, setUserDataLoggedIn } = useGlobalContext();
 
     async function handleSubmitForm() {
         //send Data over server
         const updatedUser: UserUpdateDto = new UserUpdateDto({
-            id: id,
-            email: email,
-            lastname: lastname,
-            firstname: firstname,
+            id: userDataLoggedIn[0].id,
+            email: userDataLoggedIn[0].email,
+            lastname:  !ToolBoxService.stringIsNullOrWhiteSpace(lastname)? lastname : userDataLoggedIn[0].lastname,
+            firstname: !ToolBoxService.stringIsNullOrWhiteSpace(firstname)? firstname : userDataLoggedIn[0].firstname,
         })
-        const data :UserGetDto= await apiService.userUpdate(updatedUser);
+        const updatedUserData :UserGetDto= await apiService.userUpdate(updatedUser);
+		router.refresh();
     }
 
     return (

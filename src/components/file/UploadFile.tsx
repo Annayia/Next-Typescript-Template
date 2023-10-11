@@ -1,5 +1,6 @@
 'use client'
 
+import { useGlobalContext } from '@/utils/contexts/AppContext';
 import { useState } from 'react'
 import {ApiService,FileParameter,UserGetDto} from '../../services/api.service'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
@@ -30,6 +31,7 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
 
   const apiService: ApiService = new ApiService();
   const [selectedFile, setSelectedFile] = useState<File>()
+  const { userDataLoggedIn, setUserDataLoggedIn } = useGlobalContext();
 
   const onSubmit = async () => {
     if (!selectedFile) return;
@@ -45,8 +47,10 @@ export default function UploadFileComponent(props: UploadFileComponentProps) {
 
       switch (props.uploadType) {
         case UploadTypesEnum.userAvatar:
+          console.log(fileParams);
           const updatedUser: UserGetDto = await apiService.userUploadAvatar(fileParams);
-          //TODO: update context
+          console.log(updatedUser);
+          setUserDataLoggedIn([updatedUser])
           break;
 
         default:
