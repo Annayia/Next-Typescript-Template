@@ -2,14 +2,15 @@
 import { useEffect } from 'react';
 import { ApiService } from '../services/api.service';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
-import { useRouter } from 'next/navigation';
-import { Button, Container } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import { useUserContext } from '@/utils/contexts/UserContext';
+import NavBar from '@/components/navBar/NavBar';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const router = useRouter();
   const apiService: ApiService = new ApiService();
   const { userDataLoggedIn, setUserDataLoggedIn } = useUserContext();
+  const router = useRouter();
 
   useEffect(() => {
     fetchuserDataLoggedInToSetIntoContext();
@@ -28,26 +29,24 @@ export default function Home() {
   };
   // Test of the logout and of the right display of the context OK, need to use it in an app Bar then//
   return userDataLoggedIn ? (
-    <Container>
-      <h1>Bonjour {userDataLoggedIn.firstname ?? userDataLoggedIn.email}</h1>
-      <Button onClick={() => router.push('/profilesList')}>
-        Profiles List
-      </Button>
-      <Button onClick={() => router.push('/profile')}>Profile</Button>{' '}
-      <Button
-        onClick={() => {
-          localStorage.removeItem('access_token');
-          setUserDataLoggedIn(undefined);
-          router.push('/');
-        }}
-      >
-        Logout
-      </Button>
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <Typography>
+          {' '}
+          Bonjour {userDataLoggedIn.firstname ?? userDataLoggedIn.email}
+        </Typography>
+      </Container>
+    </>
   ) : (
-    <Container>
-      <h1>Veuillez vous connecter</h1>
-      <Button onClick={() => router.push('/login')}>Login</Button>
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <h1>Veuillez vous connecter</h1>
+        <Button color="inherit" onClick={() => router.push('/login')}>
+          Login
+        </Button>
+      </Container>
+    </>
   );
 }
